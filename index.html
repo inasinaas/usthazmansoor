@@ -1,0 +1,69 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Usthaz Mansoor Collection</title>
+    <meta name="description" content="Centralized hub for Usthaz Mansoor's YouTube videos, categorized for easy viewing.">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500&family=Outfit:wght@500;700;800&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="style.css">
+</head>
+<body>
+    <div class="background-gradients">
+        <div class="gradient-blob shape-1"></div>
+        <div class="gradient-blob shape-2"></div>
+        <div class="gradient-blob shape-3"></div>
+    </div>
+
+    <header class="app-header">
+        <div class="header-container">
+            <h1 class="logo">Usthaz <span>Mansoor</span></h1>
+            <div class="search-container">
+                <input type="text" id="searchInput" placeholder="Search videos...">
+                <svg class="search-icon" xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="11" cy="11" r="8"></circle><line x1="21" y1="21" x2="16.65" y2="16.65"></line></svg>
+            </div>
+        </div>
+    </header>
+
+    <main class="app-main">
+        <nav class="category-nav">
+            <div class="nav-header" style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 12px; padding: 0 4px;">
+                <span id="videoCounter" style="color: var(--accent-color); font-weight: 700; font-family: var(--font-heading);">Loading videos...</span>
+            </div>
+            <ul id="categoryTabs" class="category-list">
+                <!-- Categories will be injected here -->
+            </ul>
+        </nav>
+
+        <section class="video-grid" id="videoGrid">
+            <!-- Video cards will be injected here -->
+        </section>
+        
+        <div id="noResults" class="no-results hidden">
+            <h2>No videos found</h2>
+            <p>Try adjusting your search or category filter.</p>
+        </div>
+    </main>
+
+    <!-- Video Modal -->
+    <div id="videoModal" class="modal-overlay hidden">
+        <div class="modal-content glass-panel">
+            <button id="closeModal" class="close-btn">&times;</button>
+            <div class="iframe-container">
+                <iframe id="youtubePlayer" src="" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" allowfullscreen></iframe>
+            </div>
+            <h2 id="modalTitle" class="modal-title"></h2>
+            <p id="modalChannel" class="modal-channel"></p>
+            <a id="modalLink" href="#" target="_blank" style="color: var(--accent-color); text-decoration: none; margin-top: 12px; display: inline-flex; align-items: center; gap: 4px; font-weight: 500;">
+                Watch on YouTube 
+                <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M18 13v6a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V8a2 2 0 0 1 2-2h6"></path><polyline points="15 3 21 3 21 9"></polyline><line x1="10" y1="14" x2="21" y2="3"></line></svg>
+            </a>
+        </div>
+    </div>
+
+    <script src="data.js"></script>
+    <script src="app.js"></script>
+</body>
+</html>

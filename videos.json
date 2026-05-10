@@ -1,0 +1,62 @@
+[
+    {
+        "id": "sample_1",
+        "title": "சூரத்துல் பாத்திஹா விளக்கம் | Tafseer of Surah Al-Fatihah",
+        "url": "https://www.youtube.com/watch?v=dQw4w9WgXcQ",
+        "channel": "Usthaz Mansoor",
+        "duration": "45:30",
+        "view_count": 12500,
+        "thumbnail": "https://images.unsplash.com/photo-1601142634808-38923eb7c560?ixlib=rb-4.0.3&auto=format&fit=crop&w=800&q=80",
+        "category": "Tafseer"
+    },
+    {
+        "id": "sample_2",
+        "title": "ரமழான் சிந்தனைகள் - Jummah Khutbah",
+        "url": "https://www.youtube.com/watch?v=dQw4w9WgXcQ",
+        "channel": "Al Quran Open College",
+        "duration": "30:15",
+        "view_count": 8300,
+        "thumbnail": "https://images.unsplash.com/photo-1564683214964-6f01df22e257?ixlib=rb-4.0.3&auto=format&fit=crop&w=800&q=80",
+        "category": "Jummah Khutbahs"
+    },
+    {
+        "id": "sample_3",
+        "title": "கேள்வி பதில் நிகழ்ச்சி | Q&A Session Part 1",
+        "url": "https://www.youtube.com/watch?v=dQw4w9WgXcQ",
+        "channel": "Mishkath Research Institute",
+        "duration": "1:15:20",
+        "view_count": 15000,
+        "thumbnail": "https://images.unsplash.com/photo-1544928147-79a2dbc1f389?ixlib=rb-4.0.3&auto=format&fit=crop&w=800&q=80",
+        "category": "Q&A"
+    },
+    {
+        "id": "sample_4",
+        "title": "நாம் ஏன் தொழ வேண்டும்? | Short Reminder",
+        "url": "https://www.youtube.com/watch?v=dQw4w9WgXcQ",
+        "channel": "Usthaz Mansoor",
+        "duration": "5:10",
+        "view_count": 25000,
+        "thumbnail": "https://images.unsplash.com/photo-1519817914152-2a241647eb78?ixlib=rb-4.0.3&auto=format&fit=crop&w=800&q=80",
+        "category": "Shorts"
+    },
+    {
+        "id": "sample_5",
+        "title": "குடும்ப வாழ்க்கைக்கான இஸ்லாமிய வழிகாட்டல் | Family Life in Islam",
+        "url": "https://www.youtube.com/watch?v=dQw4w9WgXcQ",
+        "channel": "rifajaslam",
+        "duration": "55:00",
+        "view_count": 9200,
+        "thumbnail": "https://images.unsplash.com/photo-1555529733-0e670560f4e1?ixlib=rb-4.0.3&auto=format&fit=crop&w=800&q=80",
+        "category": "General Lectures"
+    },
+    {
+        "id": "sample_6",
+        "title": "Surah Yaseen Tafseer Part 2 | சூரத்துல் யாஸீன்",
+        "url": "https://www.youtube.com/watch?v=dQw4w9WgXcQ",
+        "channel": "Usthaz Mansoor",
+        "duration": "42:10",
+        "view_count": 11000,
+        "thumbnail": "https://images.unsplash.com/photo-1601142634808-38923eb7c560?ixlib=rb-4.0.3&auto=format&fit=crop&w=800&q=80",
+        "category": "Tafseer"
+    }
+]
