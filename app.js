@@ -28,12 +28,12 @@ document.addEventListener('DOMContentLoaded', () => {
             allPlaylists = PLAYLIST_DATA;
         }
         
-        // Sort videos by upload_date descending (newest first)
+        // Sort videos by timestamp descending (newest first)
         allVideos.sort((a, b) => {
-            const dateA = a.upload_date || "";
-            const dateB = b.upload_date || "";
-            if (dateA > dateB) return -1;
-            if (dateA < dateB) return 1;
+            const timeA = a.timestamp || 0;
+            const timeB = b.timestamp || 0;
+            if (timeA > timeB) return -1;
+            if (timeA < timeB) return 1;
             
             // Fallback to sorting Usthaz Mansoor's videos to the top if dates are same
             const isAMansoor = isMansoorVideo(a);
