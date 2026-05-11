@@ -29,7 +29,11 @@
 
     <main class="app-main">
         <nav class="category-nav">
-            <div class="nav-header" style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 12px; padding: 0 4px;">
+            <div class="view-toggle" style="display: flex; gap: 10px; margin-bottom: 20px;">
+                <button id="viewVideosBtn" class="category-btn active" style="flex: 1; font-size: 1.1rem; padding: 12px;">Videos</button>
+                <button id="viewPlaylistsBtn" class="category-btn" style="flex: 1; font-size: 1.1rem; padding: 12px;">Playlists</button>
+            </div>
+            <div class="nav-header" id="categoryNavHeader" style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 12px; padding: 0 4px;">
                 <span id="videoCounter" style="color: var(--accent-color); font-weight: 700; font-family: var(--font-heading);">Loading videos...</span>
             </div>
             <ul id="categoryTabs" class="category-list">

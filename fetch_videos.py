@@ -6,7 +6,8 @@ CHANNELS = [
     "https://www.youtube.com/@rifajaslam",
     "https://www.youtube.com/@AlquranOpenCollegeSL",
     "https://www.youtube.com/@mishkathresearch7753",
-    "https://www.youtube.com/@usthadmansoor"
+    "https://www.youtube.com/@usthadmansoor",
+    "https://www.youtube.com/@thafseerworldtafseer8529"
 ]
 
 # Keywords to ensure the video is by Usthaz Mansoor (if the channel is mixed)
@@ -23,10 +24,11 @@ def is_mansoor_video(title, description, uploader):
     text_to_check = (title + " " + description).lower()
     return any(keyword in text_to_check for keyword in MANSOOR_KEYWORDS)
 
-def categorize_video(title, duration_str):
+def categorize_video(title, duration_str, uploader=""):
     title_lower = title.lower()
+    uploader_lower = uploader.lower() if uploader else ""
     
-    if "tafseer" in title_lower or "தப்ஸீர்" in title_lower or "குர்ஆன்" in title_lower or "quran" in title_lower or "surah" in title_lower or "சூரத்துல்" in title_lower or "சூரா" in title_lower or "ஸூரா" in title_lower:
+    if "thafseerworld" in uploader_lower or "tafseer" in title_lower or "தப்ஸீர்" in title_lower or "குர்ஆன்" in title_lower or "quran" in title_lower or "surah" in title_lower or "சூரத்துல்" in title_lower or "சூரா" in title_lower or "ஸூரா" in title_lower:
         return "Tafseer & Quran"
     elif "khutbah" in title_lower or "ஜும்ஆ" in title_lower or "jummah" in title_lower or "jum'ah" in title_lower or "குத்பா" in title_lower:
         return "Jummah Khutbahs"
@@ -71,13 +73,14 @@ def fetch_videos():
     }
 
     all_videos = []
+    all_playlists = []
 
     with yt_dlp.YoutubeDL(ydl_opts) as ydl:
         for channel in CHANNELS:
             print(f"Fetching from {channel}...")
             
-            # Fetch both Videos and Shorts tabs
-            for tab, force_category in [("/videos", None), ("/shorts", "Shorts")]:
+            # Fetch Videos, Shorts, and Playlists tabs
+            for tab, force_category in [("/videos", None), ("/shorts", "Shorts"), ("/playlists", "Playlists")]:
                 url_to_fetch = channel + tab
                 print(f"  -> {url_to_fetch}")
                 try:
@@ -88,27 +91,39 @@ def fetch_videos():
                             if not entry: continue
                             
                             title = entry.get('title', '')
-                            desc = entry.get('description', '') or ''
                             uploader = info.get('uploader', '') or entry.get('channel', '')
                             
-                            # Get ALL videos
-                            duration_seconds = entry.get('duration')
-                            duration_str = format_duration(duration_seconds)
-                            
-                            # Determine category
-                            cat = force_category if force_category else categorize_video(title, duration_str)
-                            
-                            vid_info = {
-                                'id': entry.get('id'),
-                                'title': title,
-                                'url': entry.get('url'),
-                                'channel': entry.get('channel', uploader),
-                                'duration': duration_str,
-                                'view_count': entry.get('view_count'),
-                                'thumbnail': next((t['url'] for t in entry.get('thumbnails', []) if t.get('url')), None),
-                                'category': cat
-                            }
-                            all_videos.append(vid_info)
+                            if force_category == "Playlists":
+                                playlist_info = {
+                                    'id': entry.get('id'),
+                                    'title': title,
+                                    'url': entry.get('url'),
+                                    'channel': entry.get('channel', uploader),
+                                    'item_count': entry.get('playlist_count') or entry.get('item_count'),
+                                    'thumbnail': next((t['url'] for t in entry.get('thumbnails', []) if t.get('url')), None)
+                                }
+                                all_playlists.append(playlist_info)
+                            else:
+                                desc = entry.get('description', '') or ''
+                                # Get ALL videos
+                                duration_seconds = entry.get('duration')
+                                duration_str = format_duration(duration_seconds)
+                                
+                                # Determine category
+                                cat = force_category if force_category else categorize_video(title, duration_str, uploader)
+                                
+                                vid_info = {
+                                    'id': entry.get('id'),
+                                    'title': title,
+                                    'url': entry.get('url'),
+                                    'channel': entry.get('channel', uploader),
+                                    'duration': duration_str,
+                                    'view_count': entry.get('view_count'),
+                                    'thumbnail': next((t['url'] for t in entry.get('thumbnails', []) if t.get('url')), None),
+                                    'category': cat,
+                                    'upload_date': entry.get('upload_date')
+                                }
+                                all_videos.append(vid_info)
                 except Exception as e:
                     print(f"Error fetching {url_to_fetch}: {e}")
 
@@ -116,9 +131,12 @@ def fetch_videos():
     with open('data.js', 'w', encoding='utf-8') as f:
         f.write("const VIDEO_DATA = ")
         json.dump(all_videos, f, indent=4, ensure_ascii=False)
+        f.write(";\nconst PLAYLIST_DATA = ")
+        json.dump(all_playlists, f, indent=4, ensure_ascii=False)
         f.write(";\n")
 
     print(f"\nSuccess! Total videos extracted: {len(all_videos)}")
+    print(f"Total playlists extracted: {len(all_playlists)}")
     print("Data saved to data.js")
 
 if __name__ == "__main__":

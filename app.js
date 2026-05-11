@@ -11,15 +11,31 @@ document.addEventListener('DOMContentLoaded', () => {
     const videoCounter = document.getElementById('videoCounter');
     const modalLink = document.getElementById('modalLink');
 
+    const viewVideosBtn = document.getElementById('viewVideosBtn');
+    const viewPlaylistsBtn = document.getElementById('viewPlaylistsBtn');
+    const categoryNavHeader = document.getElementById('categoryNavHeader');
+
     let allVideos = [];
+    let allPlaylists = [];
     let currentCategory = 'All';
+    let currentView = 'videos'; // 'videos' or 'playlists'
 
     // Initialize with data from data.js
     if (typeof VIDEO_DATA !== 'undefined') {
         allVideos = VIDEO_DATA;
         
-        // Sort Usthaz Mansoor's videos to the top
+        if (typeof PLAYLIST_DATA !== 'undefined') {
+            allPlaylists = PLAYLIST_DATA;
+        }
+        
+        // Sort videos by upload_date descending (newest first)
         allVideos.sort((a, b) => {
+            const dateA = a.upload_date || "";
+            const dateB = b.upload_date || "";
+            if (dateA > dateB) return -1;
+            if (dateA < dateB) return 1;
+            
+            // Fallback to sorting Usthaz Mansoor's videos to the top if dates are same
             const isAMansoor = isMansoorVideo(a);
             const isBMansoor = isMansoorVideo(b);
             if (isAMansoor && !isBMansoor) return -1;
@@ -47,6 +63,26 @@ document.addEventListener('DOMContentLoaded', () => {
         renderCategories();
         renderVideos(allVideos);
         videoCounter.textContent = `Total Videos: ${allVideos.length}`;
+        
+        viewVideosBtn.addEventListener('click', () => setView('videos'));
+        viewPlaylistsBtn.addEventListener('click', () => setView('playlists'));
+    }
+    
+    function setView(view) {
+        currentView = view;
+        if (view === 'videos') {
+            viewVideosBtn.classList.add('active');
+            viewPlaylistsBtn.classList.remove('active');
+            categoryNavHeader.style.display = 'flex';
+            categoryTabs.style.display = 'flex';
+            filterVideos(); // re-render videos with current filters
+        } else {
+            viewPlaylistsBtn.classList.add('active');
+            viewVideosBtn.classList.remove('active');
+            categoryNavHeader.style.display = 'none';
+            categoryTabs.style.display = 'none';
+            filterPlaylists();
+        }
     }
 
     function renderCategories() {
@@ -121,6 +157,7 @@ document.addEventListener('DOMContentLoaded', () => {
     }
 
     function filterVideos() {
+        if (currentView !== 'videos') return;
         const searchTerm = searchInput.value.toLowerCase();
         
         const filtered = allVideos.filter(video => {
@@ -139,18 +176,80 @@ document.addEventListener('DOMContentLoaded', () => {
         }
     }
 
+    function filterPlaylists() {
+        if (currentView !== 'playlists') return;
+        const searchTerm = searchInput.value.toLowerCase();
+        
+        const filtered = allPlaylists.filter(playlist => {
+            return playlist.title.toLowerCase().includes(searchTerm) || 
+                   playlist.channel.toLowerCase().includes(searchTerm);
+        });
+
+        renderPlaylists(filtered);
+    }
+    
+    function renderPlaylists(playlists) {
+        videoGrid.innerHTML = '';
+        
+        if (playlists.length === 0) {
+            noResults.classList.remove('hidden');
+        } else {
+            noResults.classList.add('hidden');
+            
+            playlists.forEach(playlist => {
+                const card = document.createElement('div');
+                card.className = 'video-card glass-panel';
+                
+                card.innerHTML = `
+                    <div class="thumbnail-container">
+                        <img src="${playlist.thumbnail || ''}" alt="${playlist.title}" class="thumbnail" loading="lazy">
+                        <div class="duration-badge" style="background: rgba(220, 38, 38, 0.9);">
+                            ${playlist.item_count || 0} videos
+                        </div>
+                        <div class="play-overlay">
+                            <div class="play-icon">
+                                <svg width="20" height="20" viewBox="0 0 24 24"><path d="M4 6h16v2H4zm2 4h12v2H6zm3 4h6v2H9z"/></svg>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="video-info">
+                        <h3 class="video-title">${playlist.title}</h3>
+                        <div class="video-meta">
+                            <span class="channel-name">
+                                <svg width="14" height="14" viewBox="0 0 24 24" fill="currentColor"><path d="M12 2C6.48 2 2 6.48 2 12s4.48 10 10 10 10-4.48 10-10S17.52 2 12 2zm0 18c-4.41 0-8-3.59-8-8s3.59-8 8-8 8 3.59 8 8-3.59 8-8 8zm-1-12.5v7l6-3.5z"/></svg>
+                                ${playlist.channel}
+                            </span>
+                        </div>
+                    </div>
+                `;
+
+                card.addEventListener('click', () => openModal(playlist, playlist.id, true));
+                videoGrid.appendChild(card);
+            });
+        }
+    }
+
     // Search functionality
-    searchInput.addEventListener('input', filterVideos);
+    searchInput.addEventListener('input', () => {
+        if (currentView === 'videos') {
+            filterVideos();
+        } else {
+            filterPlaylists();
+        }
+    });
 
     // Modal functionality
-    function openModal(video, videoId) {
-        // Using youtube-nocookie.com can sometimes bypass local file:// embed restrictions
-        youtubePlayer.src = `https://www.youtube-nocookie.com/embed/${videoId}?autoplay=1`;
-        modalTitle.textContent = video.title;
-        modalChannel.textContent = video.channel;
+    function openModal(item, itemId, isPlaylist = false) {
+        if (isPlaylist) {
+            youtubePlayer.src = `https://www.youtube-nocookie.com/embed/videoseries?list=${itemId}&autoplay=1`;
+            modalLink.href = `https://www.youtube.com/playlist?list=${itemId}`;
+        } else {
+            youtubePlayer.src = `https://www.youtube-nocookie.com/embed/${itemId}?autoplay=1`;
+            modalLink.href = `https://www.youtube.com/watch?v=${itemId}`;
+        }
         
-        // Provide direct link in case embedding is disabled
-        modalLink.href = `https://www.youtube.com/watch?v=${videoId}`;
+        modalTitle.textContent = item.title;
+        modalChannel.textContent = item.channel;
         
         videoModal.classList.remove('hidden');
         document.body.style.overflow = 'hidden'; // Prevent background scrolling
