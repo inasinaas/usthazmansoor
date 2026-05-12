@@ -21,6 +21,36 @@ MANSOOR_KEYWORDS = [
     "thafseer", "tafseer", "sura", "surah", "சூரா", "ஸூரா"
 ]
 
+IGNORED_VIDEO_IDS = set([
+    "ABa_cb0ix54", "9qFV5NpJMUk", "92w7WXfQLqI", "I2KKkxWX2uU", "_va37M0Muco", "mcDO5cVl65U", 
+    "lS5MtSZcT6E", "2KvY3tOj17w", "nXHwB3zsIfQ", "xSIgvCkExJE", "N5PN54jwu30", "QBeBcCH007o", 
+    "nsatx09mLMo", "7-5W3NYOvfU", "ByZY_0d9Rpo", "WgdI53qC59M", "qmL35lPLPbs", "8BSQxDyWtiY", 
+    "gVCe-EjJfy4", "mUFl6TVV5z4", "bhZnWL4iMgc", "LoFRqCM-Cn8", "ArjGzKaq1Vk", "YFSCBLNGzG8", 
+    "LIO7nWypdmg", "z2HrWTGU4J0", "Arj0e9z3o-g", "f3J0wGW1rEw", "5-LPlr8PuQ4", "xBcpqsRAMJQ", 
+    "sJ3QU45RgUk", "45EwQgWf2VE", "IZNVqgstri8", "rxBSjhFL-ng", "MTaU0V_1P-g", "4QJcC0QGofs", 
+    "2S504-zlQdM", "o7nWI0IBTPk", "AVPWh_9Icpg", "BC6UbwFnnVA", "TsJnmbCPFOk", "QWR77XB2nIE", 
+    "hQDegnRaAb4", "HHJS-0dq-dg", "Wa8WdWwjT7I", "BPZqDguHH-w", "mjI7mgIt598", "eLadh8zmsq4", 
+    "NbEMN_-hX0s", "ajC-rxZPvGc", "yIPeIxKFMco", "wuXhzudMP5U", "S2IaLV2VZ94", "Nw_qn3ONnqw", 
+    "Cgo76sa7HAg", "Bj6AzyTf2Wc", "y4uoPXOrrR8", "_2ndAfcUYrE", "ASZBZ_XfB54", "w4L1HT7szGY", 
+    "-P6Qc5vk2sE", "K38XTeqlhnA", "-kUoy1a2gTI", "Uvq8e4K1Lgc", "k2iQ4gXjFEU", "03GPCc2YlNM", 
+    "mrqqCG4qrmk", "dB5rGLqUuQQ", "mCeGcoc6zNM", "ZtQTV79Us1s", "Hp0MQL6Js5w", "3pQnHOdLgIo", 
+    "76DENDqPq9E", "5qk5UHbTYTc", "fxnVj3_YALQ", "r659x_ktidc", "5VNToeghr1w", "5OuWR7GDJPU", 
+    "IEb2iZba4vk", "iLM6iXtvQ-Q", "NWwRlAGnJyM", "CIKo2d--RJY", "-5PiLK3mO_c", "iGkvUysHvpk", 
+    "hFnWmYMJN5A", "-5lj0tc2P_M", "KMiqpa6FFV8", "IMJ3guMTc9w", "opyQnxBzfWU", "5S7Pz8rZR6U", 
+    "kJW_RqY3LgI", "8IbI1bY2oGU", "idq-es2YtEQ", "gTpaviPnLoE", "dj8j-KAFwTo", "7tFis9HMJeU", 
+    "SQS3xjJkKGA", "yHGEeajV0R4", "W94Ue8ZkDx4", "HIy9zoFafR4", "LquGwlLS11w", "1aQ9JeZmyZA", 
+    "lhcpq0TL1eQ", "EK7O9L2Zkw8", "53Zpbz3wSh8", "O9ZiIFveBM0", "6Nlxv-daEE8", "UMshvUH9PEQ", 
+    "utEpXGE30Rg", "73BfUoNdzYg", "8kWFC2BvrNw", "njPWqExheII", "DGespIZi4WM", "Kjw1jrHkzBg", 
+    "IQ2kqBsamC0", "1qD3ppZQMJ4", "NIqkzOdy5cY", "Z-FEJguKQTs", "zyctrWoXzoM", "108ftr033ec", 
+    "BHsDgtGs00s", "ffeoJPKSPtk", "7IqenZr3dTA", "OM7QJ2Siyzk", "6vI7UVrM2dY", "PG7a8oKzV4c", 
+    "k-16oVdM1SY", "FCNvHIVgicM", "8T8wzQQ7d40", "oXdW4Veyjzs", "G9wSKknP1zw", "y_Jg2ONBquo", 
+    "fIz2N6i_OEk", "mr9pYZ8ad0g", "hBcoq45Ofio", "f2ixSwmkuf0", "rN9fpsXVllM", "38Eh57VgcSg", 
+    "pOxBe3zNMOE", "mXKe9bz6EW8", "B0s2M3iENXQ", "BDkNWMW17yw", "ZZ6OlvpQgAc", "lL2-XFEG7v4", 
+    "t_uIXHzEM6Y", "uZUb8o_QutY", "bKkyCBnFPUw", "GXfC0ZJEFpw", "aKoybtbIi2k", "qhHMdAY8iLY", 
+    "UyzMfxk_Lwo", "Kky20RuKHpc", "37vVPzM39Hc", "Gv6V014CtaM", "8xfFDq7I-tk", "tZtn7eVGxwc", 
+    "lYIdUHtPNJ0", "OnTMYxSnP4w", "AGcowRVbjVM", "iegEGjNp5pg"
+])
+
 def is_mansoor_video(title, description, uploader):
     if "usthadmansoor" in uploader.lower().replace(" ", ""):
         return True
@@ -30,6 +60,12 @@ def is_mansoor_video(title, description, uploader):
 def categorize_video(title, duration_str, uploader=""):
     title_lower = title.lower()
     uploader_lower = uploader.lower() if uploader else ""
+    
+    if any(0x0D80 <= ord(c) <= 0x0DFF for c in title) or "sinhala" in title_lower:
+        return "Sinhala Videos"
+    if "english" in title_lower and "tamil" not in title_lower:
+        return "English Videos"
+
     if "thafseerworld" in uploader_lower or "tafseer" in title_lower or "தப்ஸீர்" in title_lower or "குர்ஆன்" in title_lower or "quran" in title_lower or "surah" in title_lower or "சூரத்துல்" in title_lower or "சூரா" in title_lower or "ஸூரா" in title_lower:
         return "Tafseer & Quran"
     elif "khutbah" in title_lower or "ஜும்ஆ" in title_lower or "jummah" in title_lower or "jum'ah" in title_lower or "குத்பா" in title_lower:
@@ -146,6 +182,8 @@ def fetch_videos():
                             title = entry.get('title', '')
                             uploader = info.get('uploader', '') or entry.get('channel', '')
                             vid_id = entry.get('id')
+                            if vid_id in IGNORED_VIDEO_IDS:
+                                continue
                             
                             if force_category == "Playlists":
                                 playlist_info = {
