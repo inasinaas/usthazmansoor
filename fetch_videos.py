@@ -73,7 +73,7 @@ def categorize_video(title, duration_str, uploader=""):
     elif "q&a" in title_lower or "கேள்வி" in title_lower or "பதில்" in title_lower or "question" in title_lower or "fatwa" in title_lower:
         return "Q&A"
     elif "history" in title_lower or "வரலாறு" in title_lower or "seerah" in title_lower or "ஸீரா" in title_lower:
-        return "Islamic History"
+        return "இஸ்லாமிய வரலாறு"
     elif "ramadan" in title_lower or "ரமழான்" in title_lower or "நோன்பு" in title_lower or "fasting" in title_lower:
         return "Ramadan"
     elif "family" in title_lower or "குடும்பம்" in title_lower or "marriage" in title_lower or "திருமணம்" in title_lower or "பெண்கள்" in title_lower:
@@ -214,6 +214,43 @@ def fetch_videos():
                                 all_videos.append(vid_info)
                 except Exception as e:
                     print(f"Error fetching {url_to_fetch}: {e}")
+
+        # Fetch from specific playlists
+        specific_playlists = [
+            ("https://www.youtube.com/playlist?list=PLbx4KjLkfqOzbWKcJkVsf4l6rwKUfhtpe", "இஸ்லாமிய வரலாறு"),
+            ("https://www.youtube.com/playlist?list=PLbx4KjLkfqOwTThbGvvziCrRIl1OpSen7", "இமாம்கள் மத்ஹப்கள்")
+        ]
+        
+        for playlist_url, target_category in specific_playlists:
+            print(f"Fetching from specific playlist: {playlist_url}")
+            try:
+                info = ydl.extract_info(playlist_url, download=False)
+                if info and 'entries' in info:
+                    for entry in info['entries']:
+                        if not entry: continue
+                        title = entry.get('title', '')
+                        uploader = info.get('uploader', '') or entry.get('channel', '')
+                        vid_id = entry.get('id')
+                        if vid_id in IGNORED_VIDEO_IDS:
+                            continue
+                        
+                        duration_seconds = entry.get('duration')
+                        duration_str = format_duration(duration_seconds)
+                        
+                        vid_info = {
+                            'id': vid_id,
+                            'title': title,
+                            'url': entry.get('url'),
+                            'channel': entry.get('channel', uploader),
+                            'duration': duration_str,
+                            'view_count': entry.get('view_count'),
+                            'thumbnail': next((t['url'] for t in entry.get('thumbnails', []) if t.get('url')), None),
+                            'category': target_category,
+                            'timestamp': None # Will be filled by API
+                        }
+                        all_videos.append(vid_info)
+            except Exception as e:
+                print(f"Error fetching {playlist_url}: {e}")
 
     # 2. Enrich video data with YouTube API
     video_ids = [v['id'] for v in all_videos if v['id']]
